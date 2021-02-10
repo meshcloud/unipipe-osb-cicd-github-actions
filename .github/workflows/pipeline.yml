@@ -24,7 +24,7 @@ jobs:
       env:
         GIT_USERNAME: ${{secrets.USERNAME}} 
         GIT_PASSWORD: ${{secrets.GH_TEST_OSB}}
-        GIT_REMOTE: https://github.com/${{secrets.USERNAME}}/unipipe-OSB-catalog-repo.git 
+        GIT_REMOTE: https://github.com/meshcloud/unipipe-OSB-catalog-repo.git 
     # Steps represent a sequence of tasks that will be executed as part of the job
       
     steps:
@@ -63,7 +63,7 @@ jobs:
       env:
         GIT_USERNAME: ${{secrets.USERNAME}} 
         GIT_PASSWORD: ${{secrets.GH_TEST_OSB}}
-        GIT_REMOTE: https://github.com/${{secrets.USERNAME}}/test-osb.git
+        GIT_REMOTE: https://github.com/meshcloud/unipipe-OSB-catalog-repo.git 
         AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY}} 
         AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_KEY}}
         AWS_DEFAULT_REGION: eu-central-1
@@ -102,7 +102,7 @@ jobs:
       env:
         GIT_USERNAME: ${{secrets.USERNAME}} 
         GIT_PASSWORD: ${{secrets.GH_TEST_OSB}}
-        GIT_REMOTE: https://github.com/${{secrets.USERNAME}}/test-osb.git
+        GIT_REMOTE: https://github.com/meshcloud/unipipe-OSB-catalog-repo.git 
         AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY}} 
         AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_KEY}}
         AWS_DEFAULT_REGION: eu-central-1 
