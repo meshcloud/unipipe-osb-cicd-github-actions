@@ -1,0 +1,133 @@
+# This is a basic workflow to help you get started with Actions
+
+
+name: CI/CD-OSB
+
+# Controls when the action will run. 
+on:
+
+  repository_dispatch:
+    types: [ci/cd]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+  
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  prepare:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    container: 
+      image: hemanthkolli/alpine-bash-git 
+      env:
+        GIT_USERNAME: ${{secrets.USERNAME}} 
+        GIT_PASSWORD: ${{secrets.GH_TEST_OSB}}
+        GIT_REMOTE: https://github.com/${{secrets.USERNAME}}/test-osb.git 
+    # Steps represent a sequence of tasks that will be executed as part of the job
+      
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: git-ci 
+        uses: actions/checkout@master
+      
+          
+      - name: Prepare-action
+        id: prepare-action
+        env:
+          COMMIT_MESSAGE:  Generated tfvars for new instances. ci skip
+        run: |
+          echo "## Cloning instances repo"
+          git config --global url.https://${{ secrets.GH_TEST_OSB }}:@github.com/.insteadOf https://github.com/
+          git clone https://github.com/Hemanthkolli/test-osb.git updated-instances-repo
+          echo "## Creating tfvars"
+          echo $(pwd)
+          echo $(ls -a)
+          ./pipeline/scripts/create-tfvars.sh . updated-instances-repo  "${{secrets.SMALL_FLAVOR}}" "${{secrets.MEDIUM_FLAVOR}}" 
+          echo "::set-output name=updated_instances_repo::$updated-instances-repo"
+          echo "## Commit to instance repo"
+          cd updated-instances-repo
+          ./../pipeline/scripts/git-commit.sh "Pipeline: $COMMIT_MESSAGE"
+          git rebase master
+          git push
+          cd ..
+          git clone updated-instances-repo committed-instances-repo
+          echo "::set-output name=committed-instances-repo::$committed-instances-repo"
+          
+  deploy:
+    needs: [prepare]
+    runs-on: ubuntu-latest
+    container: 
+      image: hemanthkolli/alpine-terraform-bash
+      env:
+        GIT_USERNAME: ${{secrets.USERNAME}} 
+        GIT_PASSWORD: ${{secrets.GH_TEST_OSB}}
+        GIT_REMOTE: https://github.com/${{secrets.USERNAME}}/test-osb.git
+        AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY}} 
+        AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_KEY}}
+        AWS_DEFAULT_REGION: eu-central-1
+    
+      
+    steps:
+      
+      - name: git-ci 
+        uses: actions/checkout@master
+        
+      - name: deploy-action
+        id: deploy-action
+        env:
+          COMMIT_MESSAGE:  Added/Updated Terraform state. ci skip
+        run: |
+          echo "## Cloning instances repo"
+          git config --global url.https://${{ secrets.GH_TEST_OSB }}:@github.com/.insteadOf https://github.com/
+          git clone https://github.com/Hemanthkolli/test-osb.git updated-instances-repo
+          echo "::set-output name=updated_instances_repo::$updated-instances-repo"
+          echo "## Deploying with Terraform"
+          ./pipeline/scripts/deploy.sh . updated-instances-repo
+          echo "## Commit to instance repo"
+          cd updated-instances-repo
+          ./../pipeline/scripts/git-commit.sh "Pipeline: $COMMIT_MESSAGE"
+          git rebase master
+          git push
+          cd ..
+          git clone updated-instances-repo committed-instances-repo
+          echo "::set-output name=committed-instances-repo::$committed-instances-repo"
+          
+  bindings:
+    needs: [deploy]
+    runs-on: ubuntu-latest
+    container: 
+      image: hemanthkolli/alpine-terraform-bash
+      env:
+        GIT_USERNAME: ${{secrets.USERNAME}} 
+        GIT_PASSWORD: ${{secrets.GH_TEST_OSB}}
+        GIT_REMOTE: https://github.com/${{secrets.USERNAME}}/test-osb.git
+        AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY}} 
+        AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_KEY}}
+        AWS_DEFAULT_REGION: eu-central-1 
+    
+      
+    steps:
+      - name: git-ci 
+        uses: actions/checkout@master
+        
+      - name: bindings-action
+        id: bindings-action
+        env:
+          COMMIT_MESSAGE:  Added/Removed bindings. ci skip
+        run: |
+          echo "## Cloning instances repo"
+          git config --global url.https://${{ secrets.GH_TEST_OSB }}:@github.com/.insteadOf https://github.com/
+          git clone https://github.com/Hemanthkolli/test-osb.git updated-instances-repo
+          echo "::set-output name=updated_instances_repo::$updated-instances-repo"
+          echo "## Creating/Deleting Service Bindings"
+          ./pipeline/scripts/bindings.sh . updated-instances-repo
+          echo "## Commit to instance repo"
+          cd updated-instances-repo
+          ./../pipeline/scripts/git-commit.sh "Pipeline: $COMMIT_MESSAGE"
+          git rebase master
+          git push
+          cd ..
+          git clone updated-instances-repo committed-instances-repo
+          echo "::set-output name=committed-instances-repo::$committed-instances-repo"
