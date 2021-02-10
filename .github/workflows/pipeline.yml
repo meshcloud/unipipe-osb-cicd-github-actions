@@ -24,7 +24,7 @@ jobs:
       env:
         GIT_USERNAME: ${{secrets.USERNAME}} 
         GIT_PASSWORD: ${{secrets.GH_TEST_OSB}}
-        GIT_REMOTE: https://github.com/${{secrets.USERNAME}}/test-osb.git 
+        GIT_REMOTE: https://github.com/${{secrets.USERNAME}}/unipipe-OSB-catalog-repo.git 
     # Steps represent a sequence of tasks that will be executed as part of the job
       
     steps:
@@ -40,7 +40,7 @@ jobs:
         run: |
           echo "## Cloning instances repo"
           git config --global url.https://${{ secrets.GH_TEST_OSB }}:@github.com/.insteadOf https://github.com/
-          git clone https://github.com/Hemanthkolli/test-osb.git updated-instances-repo
+          git clone https://github.com/meshcloud/unipipe-OSB-catalog-repo.git updated-instances-repo
           echo "## Creating tfvars"
           echo $(pwd)
           echo $(ls -a)
@@ -81,7 +81,7 @@ jobs:
         run: |
           echo "## Cloning instances repo"
           git config --global url.https://${{ secrets.GH_TEST_OSB }}:@github.com/.insteadOf https://github.com/
-          git clone https://github.com/Hemanthkolli/test-osb.git updated-instances-repo
+          git clone https://github.com/meshcloud/unipipe-OSB-catalog-repo.git updated-instances-repo
           echo "::set-output name=updated_instances_repo::$updated-instances-repo"
           echo "## Deploying with Terraform"
           ./pipeline/scripts/deploy.sh . updated-instances-repo
@@ -119,7 +119,7 @@ jobs:
         run: |
           echo "## Cloning instances repo"
           git config --global url.https://${{ secrets.GH_TEST_OSB }}:@github.com/.insteadOf https://github.com/
-          git clone https://github.com/Hemanthkolli/test-osb.git updated-instances-repo
+          git clone https://github.com/meshcloud/unipipe-OSB-catalog-repo.git updated-instances-repo
           echo "::set-output name=updated_instances_repo::$updated-instances-repo"
           echo "## Creating/Deleting Service Bindings"
           ./pipeline/scripts/bindings.sh . updated-instances-repo
