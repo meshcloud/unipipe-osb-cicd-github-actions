@@ -53,11 +53,11 @@ main(){
       if [[ "$isDeleted" == "true" ]]; then
         echo "Processing deleted binding"
         if [[ -e "credentials.yml" ]]; then
-          host_url="$(grep 'host_url:' credentials.yml | cut -d\  -f2-)"
+          host_ip="$(grep 'host_ip:' credentials.yml | cut -d\  -f2-)"
         fi
-        if [[ ! -n "${host_url-}" ]]; then
+        if [[ ! -n "${host_ip-}" ]]; then
           rm -f credentials.yml
-          echo "Deleted EC2 instance at ${host_url} successfully"
+          echo "Deleted EC2 instance at ${host_ip} successfully"
           status="succeeded"
           description=""
         else
@@ -75,7 +75,8 @@ main(){
         if [[ ! -z "$host" ]]; then
           echo "Create EC2 intance at ${host} executed successfully"
           cat >"credentials.yml" <<EOL
-host_url: "http://$host:8080"
+host_ip: ${host}
+port: "8080"
 EOL
           status="succeeded"
           description=""
