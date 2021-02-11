@@ -35,10 +35,10 @@ main(){
       # deleted is also written to tfvars to trigger an update of the git resource used in deploy job
       isDeleted="$(grep 'deleted:' $dir/instance.yml | cut -d\  -f2-)"
 
-      if [[ "$plan_id" == "\"a13edcdf-eb54-44d3-8902-8f24d5acb07e\"" ]]
+      if [[ "$plan_id" == "\"b13edcdf-eb54-44d3-8902-8f24d5acb07e\"" ]]
       then
         flavor="$SMALL_FLAVOR"
-      elif [[ "$plan_id" == "\"b387b010-c002-4eab-8902-3851694ef7ba\"" ]]
+      elif [[ "$plan_id" == "\"c387b010-c002-4eab-8902-3851694ef7ba\"" ]]
       then
         flavor="$MEDIUM_FLAVOR"
       else
