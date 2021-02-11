@@ -55,9 +55,9 @@ main(){
         if [[ -e "credentials.yml" ]]; then
           host_ip="$(grep 'host_ip:' credentials.yml | cut -d\  -f2-)"
         fi
-        if [[ ! -n "${host_ip-}" ]]; then
+        if [[ ! -z "${host_ip-}" ]]; then
           rm -f credentials.yml
-          echo "Deleted EC2 instance at ${host_ip} successfully"
+          echo "Delete instance binding at ${host_ip} successfully"
           status="succeeded"
           description=""
         else

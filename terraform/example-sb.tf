@@ -13,7 +13,7 @@ resource "aws_instance" "SampServer" {
 
     user_data = <<-EOF
                 #!/bin/bash
-                echo "Hello, World" > index.html
+                echo "Hello, meshis<img goomoji=\"1f411\" data-goomoji=\"1f411\" style=\"margin:0 0.2ex;vertical-align:middle;max-height:24px\" alt=\"🐑\" src=\"https://mail.google.com/mail/e/1f411\" data-image-whitelisted=\"\" class=\"CToWUd\">" > index.html
                 nohup busybox httpd -f -p ${var.server_port} &
                 EOF
 
