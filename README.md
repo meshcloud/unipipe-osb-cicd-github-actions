@@ -5,7 +5,7 @@ how the communication is done via a Git repo between the API and the pipeline.
 The pipeline is divided up into 3 different jobs:
 
 - Prepare: It prepares the instance. Terraform deployment and AWS EC2 type provisioning are extracted from the instance.yml and the environment and written to an instance.tfvars file.
-- Deploy: The provisioning of the service instance is done in this job. It uses the prepared SSH key and instance.tfvars file to actually create the service instance via Terraform and configure it via Ansible. The instances are running in OpenStack.
+- Deploy: The provisioning of the service instance is done in this job. It uses the prepared instance.tfvars file to actually create the service instance via Terraform. The instances are running in AWS.
 - Bindings: Bindings are created in a separate step. Creates access credentials that are written back to the GIT repo. For production use, credentials should not be written to GIT, but something like Vault should be used for that. But for demo purposes, this approach is sufficient.
 
 ## Instances Git repository
