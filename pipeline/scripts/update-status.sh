@@ -9,15 +9,14 @@ set -x
 
 doc() {
     cat <<-EOF
-Generates SSH keys for all instances that don't have one yet.
 Should be invoked from parent directory of the instances repository.
 Alternativley using absolute paths also allows execution of this script from any dir.
 
 USAGE:
-    ./example-osb-ci/pipeline/scripts/update-status.sh <instance-folder> <status> <status-description>
+    ./unipipe-osb-demo-cicd/pipeline/scripts/update-status.sh <instance-folder> <status> <status-description>
 
 EXAMPLES:
-    ./example-osb-ci/pipeline/scripts/update-status.sh "example-osb-repo/instances/MY-ID-123" "in progress" "deploying service"
+    ./unipipe-osb-demo-cicd/pipeline/scripts/update-status.sh "example-osb-repo/instances/MY-ID-123" "in progress" "deploying service"
 
 EOF
 }

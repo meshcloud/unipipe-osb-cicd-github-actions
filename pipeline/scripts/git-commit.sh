@@ -9,14 +9,14 @@ set -x
 
 doc() {
     cat <<-EOF
-Executes a 'git commit' in the current folder. Uses "Concourse" as committer.
+Executes a 'git commit' in the current folder. Uses "github workflow" as committer.
 A 'git rebase' is executed first to fetch changes in the remote repo first.
 
 USAGE:
-    ../example-osb-ci/pipeline/scripts/git-commit.sh <commit-message>
+    ../unipipe-osb-demo-cicd/pipeline/scripts/git-commit.sh <commit-message>
 
 EXAMPLES:
-    ../example-osb-ci/pipeline/scripts/git-commit.sh "Updated Status"
+    ../unipipe-osb-demo-cicd/pipeline/scripts/git-commit.sh "Updated Status"
 
 EOF
 }

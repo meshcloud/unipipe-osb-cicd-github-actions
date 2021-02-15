@@ -22,9 +22,9 @@ jobs:
     container: 
       image: hemanthkolli/alpine-bash-git 
       env:
-        GIT_USERNAME: ${{secrets.USERNAME}} 
-        GIT_PASSWORD: ${{secrets.GH_TEST_OSB}}
-        GIT_REMOTE: https://github.com/meshcloud/unipipe-OSB-catalog-repo.git 
+       # GIT_USERNAME: ${{secrets.GIT_USERNAME}} 
+        GIT_PASSWORD: ${{secrets.GIT_PAT}}
+        GIT_REMOTE: ${{secrets.GIT_REMOTE}} 
     # Steps represent a sequence of tasks that will be executed as part of the job
       
     steps:
@@ -39,8 +39,8 @@ jobs:
           COMMIT_MESSAGE:  Generated tfvars for new instances. ci skip
         run: |
           echo "## Cloning instances repo"
-          git config --global url.https://${{ secrets.GH_TEST_OSB }}:@github.com/.insteadOf https://github.com/
-          git clone https://github.com/meshcloud/unipipe-OSB-catalog-repo.git updated-instances-repo
+          git config --global url.https://${{ secrets.GIT_PAT }}:@github.com/.insteadOf https://github.com/
+          git clone ${{secrets.GIT_REMOTE}} updated-instances-repo
           echo "## Creating tfvars"
           echo $(pwd)
           echo $(ls -a)
@@ -61,9 +61,9 @@ jobs:
     container: 
       image: hemanthkolli/alpine-terraform-bash
       env:
-        GIT_USERNAME: ${{secrets.USERNAME}} 
-        GIT_PASSWORD: ${{secrets.GH_TEST_OSB}}
-        GIT_REMOTE: https://github.com/meshcloud/unipipe-OSB-catalog-repo.git 
+        #GIT_USERNAME: ${{secrets.GIT_USERNAME}} 
+        GIT_PASSWORD: ${{secrets.GIT_PAT}}
+        GIT_REMOTE: ${{secrets.GIT_REMOTE}} 
         AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY}} 
         AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_KEY}}
         AWS_DEFAULT_REGION: eu-central-1
@@ -80,8 +80,8 @@ jobs:
           COMMIT_MESSAGE:  Added/Updated Terraform state. ci skip
         run: |
           echo "## Cloning instances repo"
-          git config --global url.https://${{ secrets.GH_TEST_OSB }}:@github.com/.insteadOf https://github.com/
-          git clone https://github.com/meshcloud/unipipe-OSB-catalog-repo.git updated-instances-repo
+          git config --global url.https://${{ secrets.GIT_PAT }}:@github.com/.insteadOf https://github.com/
+          git clone ${{secrets.GIT_REMOTE}} updated-instances-repo
           echo "::set-output name=updated_instances_repo::$updated-instances-repo"
           echo "## Deploying with Terraform"
           ./pipeline/scripts/deploy.sh . updated-instances-repo
@@ -100,9 +100,9 @@ jobs:
     container: 
       image: hemanthkolli/alpine-terraform-bash
       env:
-        GIT_USERNAME: ${{secrets.USERNAME}} 
-        GIT_PASSWORD: ${{secrets.GH_TEST_OSB}}
-        GIT_REMOTE: https://github.com/meshcloud/unipipe-OSB-catalog-repo.git 
+        #GIT_USERNAME: ${{secrets.GIT_USERNAME}} 
+        GIT_PASSWORD: ${{secrets.GIT_PAT}}
+        GIT_REMOTE: ${{secrets.GIT_REMOTE}} 
         AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY}} 
         AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_KEY}}
         AWS_DEFAULT_REGION: eu-central-1 
@@ -118,8 +118,8 @@ jobs:
           COMMIT_MESSAGE:  Added/Removed bindings. ci skip
         run: |
           echo "## Cloning instances repo"
-          git config --global url.https://${{ secrets.GH_TEST_OSB }}:@github.com/.insteadOf https://github.com/
-          git clone https://github.com/meshcloud/unipipe-OSB-catalog-repo.git updated-instances-repo
+          git config --global url.https://${{ secrets.GIT_PAT }}:@github.com/.insteadOf https://github.com/
+          git clone ${{secrets.GIT_REMOTE}} updated-instances-repo
           echo "::set-output name=updated_instances_repo::$updated-instances-repo"
           echo "## Creating/Deleting Service Bindings"
           ./pipeline/scripts/bindings.sh . updated-instances-repo

@@ -10,14 +10,14 @@ set -x
 doc() {
     cat <<-EOF
 Translates the instance.yml to a tfvars file, that can be used by terraform for deployment.
-Should be invoked from parent directory of example-osb-ci and the instances repository.
+Should be invoked from parent directory of unipipe-osb-demo-cicd and the instances repository.
 Alternativley using absolute paths also allows execution of this script from any dir.
 
 USAGE:
-    ./example-osb-ci/pipeline/scripts/create-tfvars.sh <ci-repository> <instances-repository> <os-image-id> <os_external_network_id> <small_flavor> <medium_flavor> <external_ip_pool> <dns_nameservers>
+    ./unipipe-osb-demo-cicd/pipeline/scripts/create-tfvars.sh <ci-repository> <instances-repository> <small_flavor> <medium_flavor> 
 
 EXAMPLES:
-    ./example-osb-ci/pipeline/scripts/create-tfvars.sh example-osb-ci example-osb-repo 7e72a4b2-8dd4-4a3c-94f9-0ad895b7a622 e41cf977-49a4-4551-adc8-379057acacd7 cb1.small cb1.medium public00 "8.8.8.8"
+    ./unipipe-osb-demo-cicd/pipeline/scripts/create-tfvars.sh unipipe-osb-demo-cicd example-osb-repo t2.nano t2.micro
 
 EOF
 }

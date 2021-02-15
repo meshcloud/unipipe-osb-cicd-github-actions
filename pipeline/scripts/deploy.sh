@@ -9,17 +9,17 @@ set -x
 
 doc() {
     cat <<-EOF
-Deploys service instances via terraform. Should be invoked from parent directory of example-osb-ci and
+Deploys service instances via terraform. Should be invoked from parent directory of unipipe-osb-demo-cicd and
 the instances repository. Alternativley using absolute paths also allows execution of this script from any dir.
 
-The generate-ssh-keys.ssh and create-tfvars.sh scripts must have been executed before. The deployment
-uses the generated SSH key and the created instance.tfvars file for the deployment via terraform.
+The create-tfvars.sh scripts must have been executed before. The deployment
+uses the created instance.tfvars file for the deployment via terraform.
 
 USAGE:
-    ./example-osb-ci/pipeline/scripts/deploy.sh <ci-repository> <instances-repository>
+    ./unipipe-osb-demo-cicd/pipeline/scripts/deploy.sh <ci-repository> <instances-repository>
 
 EXAMPLES:
-    ./example-osb-ci/pipeline/scripts/deploy.sh example-osb-ci example-osb-repo
+    ./unipipe-osb-demo-cicd/pipeline/scripts/deploy.sh unipipe-osb-demo-cicd example-osb-repo
 
 EOF
 }
