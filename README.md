@@ -1,6 +1,6 @@
-# Example OSB CI/CD using github action Pipeline
+# Example OSB CI/CD using github action 
 This is an example CI/CD Pipeline to be used in combination with the [UniPipe Service Broker](https://github.com/meshcloud/unipipe-service-broker). It shows
-how the communication is done via a Git repo between the API and the github action pipeline.
+how the communication is done via a Git repo between the API and the github action.
 
 The pipeline is divided up into 3 different jobs:
 
