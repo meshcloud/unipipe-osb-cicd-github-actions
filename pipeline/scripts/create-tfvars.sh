@@ -34,7 +34,7 @@ main(){
       plan_id="$(grep 'planId:' $dir/instance.yml | cut -d\  -f2-)"
       # deleted is also written to tfvars to trigger an update of the git resource used in deploy job
       username="$(grep 'username: ' $dir/instance.yml | cut -d\  -f4-)"
-      desiredCount="$(grep 'desiredCount: ' instance.yml | cut -d\  -f4-)"
+      desiredCount="$(grep 'desiredCount: ' $dir/instance.yml | cut -d\  -f4-)"
       isDeleted="$(grep 'deleted:' $dir/instance.yml | cut -d\  -f2-)"
 
       if [[ "$plan_id" == "\"b13edcdf-eb54-44d3-8902-8f24d5acb07e\"" ]]
