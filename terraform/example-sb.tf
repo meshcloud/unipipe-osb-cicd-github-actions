@@ -1,6 +1,5 @@
 variable "service_instance_id" {}
 variable "username" {}
-variable "desiredCount" {}
 variable "flavor" {}
 variable "server_port" {}
 
@@ -22,7 +21,6 @@ resource "aws_instance" "SampServer" {
     tags = {
       "Name" = "terraform-sample"
     }
-    count = var.desiredCount
 }
 
 resource "aws_security_group" "instance" {
