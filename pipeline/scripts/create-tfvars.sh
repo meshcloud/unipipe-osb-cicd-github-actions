@@ -54,7 +54,7 @@ main(){
       fi
       cat >"$dir/instance.tfvars" <<EOL
 service_instance_id="${dir##*/}"
-username="${username}"
+username=${username}
 desiredCount="${desiredCount}"
 flavor="${flavor}"
 server_port="8080"
