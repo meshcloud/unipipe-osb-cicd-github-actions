@@ -18,9 +18,9 @@ Secrets used in this example repo:
 
 Create a programmatic user in aws who has access rights to create/delete ec2 instance
 
-AWS_ACCESS_KEY: AKIAIOSFODNN7EXAMPLE
+AWS_ACCESS_KEY: {AWS Access Key}
 
-AWS_SECRET_KEY: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+AWS_SECRET_KEY: {AWS Secret Key}
 
 Git credentials to access the github repository
 
